@@ -41,7 +41,7 @@ set.pumheight = 10 -- Height of the pop up menu
 set.history = 100 -- Number of commands to remember in a history table
 set.timeoutlen = 300 -- Length of time to wait for a mapped sequence
 set.updatetime = 300 -- Length of time to wait before triggering the plugin
-set.fillchars = { eob = " " } -- Disable `~` on nonexistent lines
+set.fillchars = { eob = " ", vert = " ", horiz = " " } -- Disable `~` on nonexistent lines
 set.foldlevel = 99 -- Number of levels to show in the fold column
 set.foldmethod = "indent" -- Method to use for folding
 set.foldcolumn = "0" -- Column to use for folding
@@ -50,4 +50,5 @@ set.laststatus = 3
 g.do_filetype_lua = 1 -- use filetype.lua
 g.did_load_filetypes = 0 -- don't use filetype.vim
 g.highlighturl_enabled = true -- highlight URLs by default
+
 return M

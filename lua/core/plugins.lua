@@ -20,14 +20,22 @@ if packer_status_ok then
 
         -- Popup API
         { "nvim-lua/popup.nvim" },
-        -- Cursorhold fix
+        -- Custom Plugins
         {
-            "antoinemadec/FixCursorHold.nvim",
-            event = "BufRead",
+            "folke/lua-dev.nvim",
             config = function()
-                vim.g.cursorhold_updatetime = 100
             end,
         },
+        {
+            "Djancyp/custom-theme.nvim",
+            after = "nvim-treesitter",
+            config = function()
+                require("custom-theme").setup()
+                local hl = vim.api.nvim_set_hl
+                hl(0, 'CursorLineNr', { bold = true, fg = "#D7BA7D", bg = "#1E1E1E" })
+            end,
+        },
+        -- End of custom plugins
         -- Start screen
         {
             "goolord/alpha-nvim",
@@ -76,7 +84,7 @@ if packer_status_ok then
         { "kyazdani42/nvim-web-devicons",
             config = function()
                 require 'nvim-web-devicons'.setup {
-                    -- your personnal icons can go here (to override)
+                    -- your personal icons can go here (to override)
                     -- you can specify color or cterm_color instead of specifying both of them
                     -- DevIcon will be appended to `name`
                     override = {
@@ -88,12 +96,12 @@ if packer_status_ok then
                         }
                     };
                     -- globally enable default icons (default to false)
-                    -- will get overriden by `get_icons` option
+                    -- will get overridden by `get_icons` option
                     default = true;
                 }
             end
         },
-        -- Statusline
+        -- Status line
         { "feline-nvim/feline.nvim",
             after = "nvim-web-devicons",
             config = function()
@@ -382,7 +390,9 @@ if packer_status_ok then
                 require('configs.rest').setup()
             end,
         },
-
+        -- Note
+        { "vimwiki/vimwiki" },
+        { "nvim-treesitter/playground" },
     }
     packer.startup {
         function(use)

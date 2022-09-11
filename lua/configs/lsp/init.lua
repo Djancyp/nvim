@@ -34,9 +34,25 @@ if status_ok then
     }
 
     for _, server in ipairs(servers) do
-        lspconfig[server].setup({
-            capabilities = capabilities,
-        })
+        if server == "sumneko_lua" then
+            local lua = require("lua-dev").setup(
+                {
+                    override = function(root_dir, library)
+                        if require("lua-dev.util").has_file(root_dir, "~/Documants/nvim-plugins") then
+                            library.enabled = true
+                            library.plugins = true
+                        end
+                    end,
+                }
+            )
+
+            lspconfig[server].setup(lua)
+
+        else
+            lspconfig[server].setup({
+                capabilities = capabilities,
+            })
+        end
     end
 
     vim.api.nvim_create_autocmd("BufWritePre", {
