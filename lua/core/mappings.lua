@@ -41,6 +41,7 @@ map("n", "<C-Right>", function()
 end, { desc = "Resize split right" })
 
 -- LSP
+map("n", "K", vim.lsp.buf.hover, { desc = "Hover symbol details" })
 map("n", "<leader>lf", vim.lsp.buf.format, { desc = "Format code" })
 map("n", "<leader>li", "<cmd>LspInfo<cr>", { desc = "LSP information" })
 map("n", "<leader>lI", "<cmd>LspInstallInfo<cr>", { desc = "LSP installer" })
