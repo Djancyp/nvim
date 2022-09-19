@@ -3,7 +3,7 @@ local M = {}
 local set = vim.opt
 local g = vim.g
 vim.g.catppuccin_flavour = "frappe"
-
+-- Highlight on yank
 local autocmd = vim.api.nvim_create_autocmd
 local group = vim.api.nvim_create_augroup("_general_settings", {})
 autocmd(
@@ -13,11 +13,10 @@ autocmd(
         pattern = "*",
         desc = "Highlight text on yank",
         callback = function()
-            require("vim.highlight").on_yank { higroup = "Search", timeout = 100 }
+            require("vim.highlight").on_yank { higroup = "Search", timeout = 40 }
         end,
     }
 )
--- vim.cmd('colorscheme nightfox')
 vim.cmd('au BufNewFile,BufEnter *.template :setl ft=html')
 set.fileencoding = "utf-8" -- File content encoding for the buffer
 set.spelllang = "en" -- Support US english
@@ -46,7 +45,6 @@ set.number = true -- Show numberline
 set.relativenumber = true -- Show relative numberline
 set.wrap = false -- Disable wrapping of lines longer than the width of window
 set.conceallevel = 0 -- Show text normally
--- set.cmdheight = 1 -- Number of screen lines to use for the command line
 set.shiftwidth = 4 -- Number of space inserted for indentation
 set.tabstop = 4 -- Number of space in a tab
 set.scrolloff = 8 -- Number of lines to keep above and below the cursor
@@ -64,5 +62,4 @@ set.laststatus = 3
 g.do_filetype_lua = 1 -- use filetype.lua
 g.did_load_filetypes = 0 -- don't use filetype.vim
 g.highlighturl_enabled = true -- highlight URLs by default
-g.highlightedyank_highlight_duration = 1000
 return M
