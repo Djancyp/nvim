@@ -3,6 +3,20 @@ local M = {}
 local set = vim.opt
 local g = vim.g
 vim.g.catppuccin_flavour = "frappe"
+
+local autocmd = vim.api.nvim_create_autocmd
+local group = vim.api.nvim_create_augroup("_general_settings", {})
+autocmd(
+    "TextYankPost",
+    {
+        group = group,
+        pattern = "*",
+        desc = "Highlight text on yank",
+        callback = function()
+            require("vim.highlight").on_yank { higroup = "Search", timeout = 100 }
+        end,
+    }
+)
 -- vim.cmd('colorscheme nightfox')
 vim.cmd('au BufNewFile,BufEnter *.template :setl ft=html')
 set.fileencoding = "utf-8" -- File content encoding for the buffer
@@ -50,5 +64,5 @@ set.laststatus = 3
 g.do_filetype_lua = 1 -- use filetype.lua
 g.did_load_filetypes = 0 -- don't use filetype.vim
 g.highlighturl_enabled = true -- highlight URLs by default
-
+g.highlightedyank_highlight_duration = 1000
 return M
