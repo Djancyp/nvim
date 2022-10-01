@@ -188,7 +188,7 @@ local comps = {
     lsp = {
         name = {
             provider = function()
-                local clients = vim.lsp.buf_get_clients()
+                local clients = vim.lsp.get_active_clients()
                 local client_names = {}
 
                 -- add client

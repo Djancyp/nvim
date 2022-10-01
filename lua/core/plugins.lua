@@ -32,8 +32,22 @@ if packer_status_ok then
             config = function()
                 require("custom-theme").setup()
                 local hl = vim.api.nvim_set_hl
-                hl(0, 'CursorLineNr', { bold = true, fg = "#D7BA7D", bg = "#1E1E1E" })
+                hl(0, 'CursorLineNr', { bold = true, fg = "#D7BA7D", bg = "#1E1E1E", italic = true })
             end,
+        },
+        -- { "sainnhe/gruvbox-material",
+        --     config = function()
+        --         vim.cmd [[colorscheme gruvbox-material]]
+        --     end
+        -- },
+        { "catppuccin/nvim", as = "catppuccin",
+            config = function()
+                vim.g.catppuccin_flavour = "mocha" -- latte, frappe, macchiato, mocha
+
+                require("catppuccin").setup()
+
+                vim.cmd [[colorscheme catppuccin]]
+            end
         },
         -- End of custom plugins
         -- Start screen
@@ -42,34 +56,6 @@ if packer_status_ok then
             config = function()
                 require("configs.dashboard").config()
             end,
-        },
-        -- Theme
-        { "Mofiqul/vscode.nvim",
-            config = function()
-                vim.cmd('colorscheme vscode')
-                local c = require('vscode.colors')
-                require('vscode').setup({
-                    -- Enable transparent background
-                    transparent = false,
-
-                    -- Enable italic comment
-                    italic_comments = true,
-
-                    -- Disable nvim-tree background color
-                    disable_nvimtree_bg = true,
-
-                    -- Override colors (see ./lua/vscode/colors.lua)
-                    color_overrides = {
-                        vscLineNumber = '#FFFFFF',
-                    },
-
-                    -- Override highlight groups (see ./lua/vscode/theme.lua)
-                    group_overrides = {
-                        -- this supports the same val table as vim.api.nvim_set_hl
-                        Cursor = { fg = c.vscDarkBlue, bg = c.vscLightGreen, bold = true },
-                    }
-                })
-            end
         },
         -- winbar with symbol
         {

@@ -10,6 +10,18 @@ function M.config()
             hl = "Type",
             -- wrap = "overflow";
         }
+        dashboard.section.header.val = {
+            [[                               __                ]],
+            [[  ___     ___    ___   __  __ /\_\    ___ ___    ]],
+            [[ / _ `\  / __`\ / __`\/\ \/\ \\/\ \  / __` __`\  ]],
+            [[/\ \/\ \/\  __//\ \_\ \ \ \_/ |\ \ \/\ \/\ \/\ \ ]],
+            [[\ \_\ \_\ \____\ \____/\ \___/  \ \_\ \_\ \_\ \_\]],
+            [[ \/_/\/_/\/____/\/___/  \/__/    \/_/\/_/\/_/\/_/]],
+            [[]],
+            "Hello, " .. vim.fn.expand("$USER") .. "!",
+            "Today is " .. os.date("%A, %B %d, %Y"),
+            "Plugins: " .. vim.fn.len(vim.fn.globpath("~/.local/share/nvim/site/pack/packer/start", "*", 0, 1)),
+        }
         dashboard.button = function(sc, txt, keybind, keybind_opts)
             local sc_ = sc:gsub("%s", ""):gsub(leader, "<leader>")
 

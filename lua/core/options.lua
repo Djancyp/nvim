@@ -59,7 +59,7 @@ set.foldmethod = "indent" -- Method to use for folding
 set.foldcolumn = "0" -- Column to use for folding
 set.formatoptions = "tcqr" -- Options for the formatting
 set.laststatus = 3
-g.do_filetype_lua = 1 -- use filetype.lua
-g.did_load_filetypes = 0 -- don't use filetype.vim
 g.highlighturl_enabled = true -- highlight URLs by default
+-- vim.o.ls = 0
+vim.o.ch = 0
 return M
