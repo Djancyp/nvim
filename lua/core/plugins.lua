@@ -333,7 +333,29 @@ if packer_status_ok then
         {
             "rcarriga/nvim-dap-ui",
             config = function()
-                require("dapui").setup()
+                require("dapui").setup({
+                    layouts = {
+                        {
+                            elements = {
+                                -- Elements can be strings or table with id and size keys.
+                                { id = "scopes", size = 0.25 },
+                                "breakpoints",
+                                "stacks",
+                                "watches",
+                            },
+                            size = 50, -- 40 columns
+                            position = "right", -- Can be "left" or "right"
+                        },
+                        {
+                            elements = {
+                                "repl",
+                                -- "console",
+                            },
+                            size = 0.25, -- 25% of total lines
+                            position = "bottom",
+                        },
+                    },
+                })
             end,
         },
         -- HTML Emmet
