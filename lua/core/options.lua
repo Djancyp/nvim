@@ -60,6 +60,9 @@ set.foldcolumn = "0" -- Column to use for folding
 set.formatoptions = "tcqr" -- Options for the formatting
 set.laststatus = 3
 g.highlighturl_enabled = true -- highlight URLs by default
+vim.g.do_filetype_lua = 1
+vim.g.did_load_filetypes = 0
+vim.g.did_load_filetypes = false
 -- vim.o.ls = 0
 vim.o.ch = 0
 return M

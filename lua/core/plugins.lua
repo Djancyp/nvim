@@ -155,15 +155,29 @@ if packer_status_ok then
 
         { "p00f/nvim-ts-rainbow" },
         -- Completion engine
+        -- {
+        --     "github/copilot.vim",
+        -- },
+        { "zbirenbaum/copilot.lua",
+            event = { "VimEnter" },
+            config = function()
+                vim.defer_fn(function()
+                    require("copilot").setup()
+                end, 100)
+            end, },
+        { "zbirenbaum/copilot-cmp",
+            after = { "copilot.lua" },
+            config = function()
+                require("copilot_cmp").setup()
+            end },
         {
             "hrsh7th/nvim-cmp",
+            after = { "copilot.lua" },
             config = function()
                 require("configs.cmp").config()
             end,
         },
-        {
-            "github/copilot.vim",
-        },
+
         -- Buffer completion source
         {
             "hrsh7th/cmp-buffer",

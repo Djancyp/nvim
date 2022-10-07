@@ -106,6 +106,7 @@ function M.config()
             Unit = "塞",
             Value = " ",
             Variable = " ",
+            Copilot = " ",
         }
         local source_names = {
             nvim_lsp = "(LSP)",
@@ -117,6 +118,7 @@ function M.config()
             luasnip = "(Snippet)",
             buffer = "(Buffer)",
             tmux = "(TMUX)",
+            copilot = "(Copilot)",
         }
         local duplicates = {
             buffer = 1,
@@ -163,6 +165,8 @@ function M.config()
                 documentation = cmp.config.window.bordered(),
             },
             sources = {
+                -- Copilot Source
+                { name = "copilot", group_index = 2 },
                 { name = "nvim_lsp", group_index = 2 },
                 { name = "path", group_index = 2 },
                 { name = "luasnip", group_index = 2 },
@@ -178,6 +182,8 @@ function M.config()
             sorting = {
                 priority_weight = 2,
                 comparators = {
+                    require("copilot_cmp.comparators").prioritize,
+                    require("copilot_cmp.comparators").score,
                     compare.offset,
                     compare.exact,
                     -- compare.scopes,
