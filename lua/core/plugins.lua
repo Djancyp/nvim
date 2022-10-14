@@ -26,6 +26,7 @@ if packer_status_ok then
             config = function()
             end,
         },
+        { "RRethy/vim-illuminate" },
         {
             "Djancyp/custom-theme.nvim",
             after = "nvim-treesitter",
@@ -126,6 +127,50 @@ if packer_status_ok then
             end,
         },
         -- Lsp Settings
+        { "jose-elias-alvarez/null-ls.nvim",
+            config = function()
+                local null_ls_status_ok, null_ls = pcall(require, "null-ls")
+                if not null_ls_status_ok then
+                    return
+                end
+
+                -- done by mason now
+                -- npm install -g @fsouza/prettierd  stylelint
+                -- paru -S selene-linter shfmt shellcheck-bin yamllint actionlint-bin stylua
+
+                -- paru -S nginxbeautifier ansible-lint-git
+
+                local formatting = null_ls.builtins.formatting
+                local diagnostics = null_ls.builtins.diagnostics
+                local code_actions = null_ls.builtins.code_actions
+
+                null_ls.setup({
+                    debug = false,
+                    sources = {
+                        -- github actions
+                        -- diagnostics.actionlint,
+                        diagnostics.selene,
+
+                        diagnostics.shellcheck,
+                        diagnostics.zsh,
+                        diagnostics.stylelint,
+                        diagnostics.yamllint,
+                        diagnostics.ansiblelint,
+
+                        formatting.stylua,
+                        formatting.prettierd,
+                        formatting.stylelint,
+                        formatting.nginx_beautifier,
+                        formatting.shfmt,
+                        formatting.xmllint,
+
+                        -- code_actions.gitsigns,
+                        code_actions.refactoring,
+                        code_actions.shellcheck,
+                    },
+                })
+            end
+        },
         {
             "neovim/nvim-lspconfig",
             module = "lspconfig",
@@ -151,6 +196,11 @@ if packer_status_ok then
             config = function()
                 require("configs.treesitter").config()
             end,
+        },
+        { "nvim-treesitter/nvim-treesitter-context",
+            config = function()
+                require 'treesitter-context'.setup()
+            end
         },
 
         { "p00f/nvim-ts-rainbow" },
@@ -332,6 +382,19 @@ if packer_status_ok then
                 require("configs.colorizer").config()
             end,
         },
+        { "olexsmir/gopher.nvim",
+            config = function()
+                require("gopher").setup {
+                    commands = {
+                        go = "go",
+                        gomodifytags = "gomodifytags",
+                        gotests = "~/go/bin/gotests", -- also you can set custom command path
+                        impl = "impl",
+                        iferr = "iferr",
+                    },
+                }
+            end
+        },
         -- Debugeer
         { "mfussenegger/nvim-dap",
             config = function()
@@ -415,6 +478,14 @@ if packer_status_ok then
         -- Note
         { "vimwiki/vimwiki" },
         { "nvim-treesitter/playground" },
+        -- Rust
+        { "simrat39/rust-tools.nvim" },
+        {
+            "j-hui/fidget.nvim",
+            config = function()
+                require("fidget").setup()
+            end,
+        },
     }
     packer.startup {
         function(use)

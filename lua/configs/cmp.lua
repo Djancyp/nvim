@@ -3,6 +3,7 @@ function M.config()
     local cmp_status_ok, cmp = pcall(require, "cmp")
     local luasnip = pcall(require, "luasnip")
     local compare = require "cmp.config.compare"
+    local dap = require("dap")
     local status_ok_1, mason_lspconfig = pcall(require, "mason-lspconfig")
     if not status_ok_1 then
         return
@@ -11,6 +12,31 @@ function M.config()
         local servers = mason_lspconfig.get_installed_servers()
         for _, lsp in ipairs(servers) do
             if lsp == "rust_analyzer" then
+                local mason_path = vim.fn.glob(vim.fn.stdpath "data" .. "/mason/")
+                local codelldb_adapter = {
+                    type = "server",
+                    port = "${port}",
+                    executable = {
+                        command = mason_path .. "bin/codelldb",
+                        args = { "--port", "${port}" },
+                        -- On windows you may have to uncomment this:
+                        -- detached = false,
+                    },
+                }
+                print(mason_path)
+                dap.adapters.codelldb = codelldb_adapter
+                dap.configurations.rust = {
+                    {
+                        name = "Launch file",
+                        type = "codelldb",
+                        request = "launch",
+                        program = function()
+                            return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
+                        end,
+                        cwd = "${workspaceFolder}",
+                        stopOnEntry = false,
+                    },
+                }
                 -- local rust_opts = require "user.lsp.settings.rust"
                 local rust_opts = {
                     tools = {
@@ -27,13 +53,8 @@ function M.config()
                             other_hints_prefix = " ",
                         },
                     },
-
                     dap = {
-                        adapter = {
-                            type = "executable",
-                            command = "lldb-vscode-13",
-                            name = "rt_lldb",
-                        },
+                        adapter = codelldb_adapter
                     },
                     hover_actions = {
                         -- the border that is used for the hover window
@@ -52,6 +73,23 @@ function M.config()
                         -- whether the hover action window gets automatically focused
                         -- default: false
                         auto_focus = false,
+                    },
+                    executor = require("rust-tools/executors").termopen, -- can be quickfix or termopen
+                    reload_workspace_from_cargo_toml = true,
+                    runnables = {
+                        use_telescope = true,
+                    },
+                    inlay_hints = {
+                        auto = true,
+                        only_current_line = false,
+                        show_parameter_hints = false,
+                        parameter_hints_prefix = "<-",
+                        other_hints_prefix = "=>",
+                        max_len_align = false,
+                        max_len_align_padding = 1,
+                        right_align = false,
+                        right_align_padding = 7,
+                        highlight = "Comment",
                     },
 
                     server = {
