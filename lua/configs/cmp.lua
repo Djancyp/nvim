@@ -23,7 +23,6 @@ function M.config()
                         -- detached = false,
                     },
                 }
-                print(mason_path)
                 dap.adapters.codelldb = codelldb_adapter
                 dap.configurations.rust = {
                     {
@@ -175,8 +174,7 @@ function M.config()
                     end
                     vim_item.kind = kind_icons[vim_item.kind]
                     vim_item.menu = source_names[entry.source.name]
-                    vim_item.dup = duplicates[entry.source.name]
-                        or 0
+                    vim_item.dup = { buffer = 1, path = 0, nvim_lsp = 0, luasnip = 1 }
                     return vim_item
                 end,
             },

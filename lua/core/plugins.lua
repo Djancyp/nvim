@@ -227,7 +227,10 @@ if packer_status_ok then
                 require("configs.cmp").config()
             end,
         },
-
+        {
+            "saadparwaiz1/cmp_luasnip",
+            after = "nvim-cmp",
+        },
         -- Buffer completion source
         {
             "hrsh7th/cmp-buffer",

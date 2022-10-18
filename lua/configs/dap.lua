@@ -51,7 +51,6 @@ function M.config()
 end
 
 function M.attach()
-    print("attaching")
     dap.run({
         type = 'node2',
         request = 'attach',
@@ -63,7 +62,6 @@ function M.attach()
 end
 
 function M.attachToRemote()
-    print("attaching")
     dap.run({
         type = 'node2',
         request = 'attach',
