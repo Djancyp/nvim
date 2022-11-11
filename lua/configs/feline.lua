@@ -193,7 +193,7 @@ local comps = {
 
                 -- add client
                 for _, client in pairs(clients) do
-                    if client.name ~= "copilot" and client.name ~= "null-ls" then
+                    if client.name ~= "copilot" then
                         table.insert(client_names, client.name)
                     end
                 end

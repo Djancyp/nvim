@@ -3,6 +3,7 @@ if status_ok then
     local handlers = require "configs.lsp.handlers"
     local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
     local mason_status_ok, mason = pcall(require, "mason")
+    local util = require("lspconfig").util
     if not mason_status_ok then
         return
     end
@@ -33,12 +34,21 @@ if status_ok then
         automatic_installation = true,
     }
 
-    for _, server in ipairs(servers) do
-        lspconfig[server].setup({
-            capabilities = capabilities,
-        })
+    local function setup_servers()
+        for _, server in ipairs(servers) do
+            lspconfig[server].setup({
+                capabilities = capabilities,
+            })
+        end
     end
 
+    setup_servers()
+
+    -- Automatically reload after `:LspInstall <server>` so we don't have to restart neovim
+    -- require 'lspinstall'.post_install_hook = function()
+    --     setup_servers() -- reload installed servers
+    --     vim.cmd("bufdo e") -- this triggers the FileType autocmd that starts the server
+    -- end
     vim.api.nvim_create_autocmd("BufWritePre", {
         callback = function()
             -- check if lsp has a server for buf
