@@ -23,26 +23,71 @@ if packer_status_ok then
 		-- 	config = function() end,
 		-- },
 		-- { "RRethy/vim-illuminate" },
-		{
-			"Djancyp/custom-theme.nvim",
-			after = "nvim-treesitter",
-			config = function()
-				require("custom-theme").setup()
-				local hl = vim.api.nvim_set_hl
-				hl(0, "CursorLineNr", { bold = true, fg = "#D7BA7D", bg = "#1E1E1E", italic = true })
-			end,
-		},
+		-- {
+		-- 	"Djancyp/custom-theme.nvim",
+		-- 	after = "nvim-treesitter",
+		-- 	config = function()
+		-- 		require("custom-theme").setup()
+		-- 	end,
+		-- },
 		{
 			"catppuccin/nvim",
 			as = "catppuccin",
 			config = function()
-				vim.g.catppuccin_flavour = "mocha" -- latte, frappe, macchiato, mocha
+				-- vim.g.catppuccin_flavour = "frappe" -- latte, frappe, macchiato, mocha
 
-				require("catppuccin").setup()
+				require("catppuccin").setup({
+					flavour = "mocha", -- latte, frappe, macchiato, mocha
+					background = { -- :h background
+						light = "latte",
+						dark = "frappe",
+					},
+					compile_path = vim.fn.stdpath("cache") .. "/catppuccin",
+					transparent_background = false,
+					term_colors = false,
+					dim_inactive = {
+						enabled = false,
+						shade = "dark",
+						percentage = 0.15,
+					},
+					styles = {
+						comments = { "italic" },
+						conditionals = { "italic" },
+						loops = {},
+						functions = { "italic", "bold" },
+						keywords = {},
+						strings = {},
+						variables = {},
+						numbers = {},
+						booleans = {},
+						properties = {},
+						types = {},
+						operators = {},
+					},
+					color_overrides = {
+						frappe = {
+							-- base = "#262626",
+							-- mantle = "#242424",
+							-- crust = "#474747",
+						},
+					},
+					custom_highlights = {},
+					integrations = {
+						cmp = true,
+						gitsigns = true,
+						nvimtree = true,
+						telescope = true,
+						treesitter = true,
+						-- For more plugins integrations please scroll down (https://github.com/catppuccin/nvim#integrations)
+					},
+				})
 
-				vim.cmd([[colorscheme catppuccin]])
+				vim.cmd([[colorscheme catppuccin-frappe]])
+				local hl = vim.api.nvim_set_hl
+				hl(0, "CursorLineNr", { bold = true, fg = "#D7BA7D" })
 			end,
 		},
+
 		-- End of custom plugins
 		-- Start screen
 		{
@@ -90,22 +135,8 @@ if packer_status_ok then
 				require("configs.feline")
 			end,
 		},
-		-- {
-		-- 	"nvim-lualine/lualine.nvim",
-		-- 	config = function()
-		-- 		require("configs.lualine")
-		-- 	end,
-		-- },
-		-- File explorer
 		{
-			"nvim-neo-tree/neo-tree.nvim",
-			cmd = "Neotree",
-			branch = "v2.x",
-			requires = {
-				"nvim-lua/plenary.nvim",
-				"kyazdani42/nvim-web-devicons", -- not strictly required, but recommended
-				"MunifTanjim/nui.nvim",
-			},
+			"nvim-tree/nvim-tree.lua",
 			config = function()
 				require("configs.neo-tree").config()
 			end,
@@ -252,13 +283,13 @@ if packer_status_ok then
 		},
 		-- Utils
 		-- Smarter Splits
-		-- {
-		-- 	"mrjones2014/smart-splits.nvim",
-		-- 	module = "smart-splits",
-		-- 	config = function()
-		-- 		require("configs.smart-splits").config()
-		-- 	end,
-		-- },
+		{
+			"mrjones2014/smart-splits.nvim",
+			module = "smart-splits",
+			config = function()
+				require("configs.smart-splits").config()
+			end,
+		},
 		-- Comments
 		{
 			"numToStr/Comment.nvim",
@@ -468,6 +499,7 @@ if packer_status_ok then
 				})
 			end,
 		},
+		-- Smoth Scrolling
 		{
 			"declancm/cinnamon.nvim",
 			config = function()
@@ -476,24 +508,24 @@ if packer_status_ok then
 		},
 		{ "ThePrimeagen/harpoon" },
 		-- Post get rest managment
-		{
-			"NTBBloodbath/rest.nvim",
-			requires = { "nvim-lua/plenary.nvim" },
-			config = function()
-				require("configs.rest").setup()
-			end,
-		},
+		-- {
+		-- 	"NTBBloodbath/rest.nvim",
+		-- 	requires = { "nvim-lua/plenary.nvim" },
+		-- 	config = function()
+		-- 		require("configs.rest").setup()
+		-- 	end,
+		-- },
 		-- Note
-		{ "vimwiki/vimwiki" },
-		{ "nvim-treesitter/playground" },
-		-- Rust
-		{ "simrat39/rust-tools.nvim" },
-		{
-			"j-hui/fidget.nvim",
-			config = function()
-				require("fidget").setup()
-			end,
-		},
+		-- { "vimwiki/vimwiki" },
+		-- { "nvim-treesitter/playground" },
+		-- -- Rust
+		-- { "simrat39/rust-tools.nvim" },
+		-- {
+		-- 	"j-hui/fidget.nvim",
+		-- 	config = function()
+		-- 		require("fidget").setup()
+		-- 	end,
+		-- },
 	}
 	packer.startup({
 		function(use)
